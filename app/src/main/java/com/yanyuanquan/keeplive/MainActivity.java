@@ -12,6 +12,8 @@ import android.support.v7.view.ContextThemeWrapper;
 
 
 public class MainActivity extends AppCompatActivity {
+    private ClientService clientService;
+    private ServerService serverService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,11 +23,12 @@ public class MainActivity extends AppCompatActivity {
         bindService(cIntent, new ServiceConnection() {
             @Override
             public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
-
+                clientService = (ClientService) BindInterface.Stub.asInterface(iBinder);
             }
 
             @Override
             public void onServiceDisconnected(ComponentName componentName) {
+
 
             }
         }, Context.BIND_IMPORTANT);
@@ -34,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
         bindService(sIntent, new ServiceConnection() {
             @Override
             public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
-
+                serverService = (ServerService) BindInterface.Stub.asInterface(iBinder);
             }
 
             @Override
@@ -42,5 +45,6 @@ public class MainActivity extends AppCompatActivity {
 
             }
         }, Context.BIND_IMPORTANT);
+
     }
 }

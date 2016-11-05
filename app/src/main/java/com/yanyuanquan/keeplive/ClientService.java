@@ -20,10 +20,16 @@ public class ClientService extends Service {
         return stub;
     }
 
+    @Override
+    public void onCreate() {
+        super.onCreate();
 
-    BindInterface.Stub stub = new BindInterface.Stub(){
+    }
+
+    BindInterface.Stub stub = new BindInterface.Stub() {
         @Override
         public void onBind() throws RemoteException {
+
 
         }
     };
