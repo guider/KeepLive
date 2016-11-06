@@ -15,6 +15,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <service
+            android:name=".ServerService"
+            android:process=".remote" />
+        <service android:name=".ClientService" />
     </application>
 
 </manifest>

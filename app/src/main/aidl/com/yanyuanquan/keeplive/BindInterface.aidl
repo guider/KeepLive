@@ -6,4 +6,5 @@ package com.yanyuanquan.keeplive;
 interface BindInterface {
     
        void onBind();
+       String getServiceName();
 }

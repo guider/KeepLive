@@ -19,32 +19,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Intent cIntent = new Intent(this, ClientService.class);
-        bindService(cIntent, new ServiceConnection() {
-            @Override
-            public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
-                clientService = (ClientService) BindInterface.Stub.asInterface(iBinder);
-            }
 
-            @Override
-            public void onServiceDisconnected(ComponentName componentName) {
-
-
-            }
-        }, Context.BIND_IMPORTANT);
-
-        Intent sIntent = new Intent(this, ServerService.class);
-        bindService(sIntent, new ServiceConnection() {
-            @Override
-            public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
-                serverService = (ServerService) BindInterface.Stub.asInterface(iBinder);
-            }
-
-            @Override
-            public void onServiceDisconnected(ComponentName componentName) {
-
-            }
-        }, Context.BIND_IMPORTANT);
-
+        startService(new Intent(this, ClientService.class));
+        startService(new Intent(this, ServerService.class));
     }
 }
