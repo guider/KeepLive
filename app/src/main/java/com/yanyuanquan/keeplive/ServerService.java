@@ -9,6 +9,7 @@ import android.os.IBinder;
 import android.os.RemoteException;
 import android.support.annotation.Nullable;
 import android.util.Log;
+import android.widget.Toast;
 
 /**
  * Created by apple on 16/11/1.
@@ -22,11 +23,11 @@ public class ServerService extends Service {
     }
 
     @Override
-    public void onStart(Intent intent, int startId) {
-        super.onStart(intent, startId);
+    public int onStartCommand(Intent intent, int flags, int startId) {
         this.bindService(new Intent(this, ClientService.class), connection, Context.BIND_IMPORTANT);
-    }
 
+        return super.onStartCommand(intent, flags, startId);
+    }
     BindInterface.Stub stub = new BindInterface.Stub() {
         @Override
         public void onBind() throws RemoteException {
@@ -46,6 +47,9 @@ public class ServerService extends Service {
 
         @Override
         public void onServiceDisconnected(ComponentName componentName) {
+            Toast.makeText(ServerService.this,"本地服务被杀",Toast.LENGTH_LONG).show();
+            ServerService.this.startService(new Intent(ServerService.this,ClientService.class));
+            ServerService.this.bindService(new Intent(ServerService.this, ClientService.class), connection, Context.BIND_IMPORTANT);
 
         }
     };

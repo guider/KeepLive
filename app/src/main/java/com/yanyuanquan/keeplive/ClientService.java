@@ -10,6 +10,7 @@ import android.os.IBinder;
 import android.os.RemoteException;
 import android.support.annotation.Nullable;
 import android.util.Log;
+import android.widget.Toast;
 
 /**
  * Created by apple on 16/11/1.
@@ -23,12 +24,14 @@ public class ClientService extends Service {
         return stub;
     }
 
-    @Override
-    public void onStart(Intent intent, int startId) {
-        super.onStart(intent, startId);
-        this.bindService(new Intent(this, ServerService.class), connection, Context.BIND_IMPORTANT);
-    }
 
+
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        this.bindService(new Intent(this, ServerService.class), connection, Context.BIND_IMPORTANT);
+
+        return super.onStartCommand(intent, flags, startId);
+    }
 
     BindInterface.Stub stub = new BindInterface.Stub() {
         @Override
@@ -53,6 +56,9 @@ public class ClientService extends Service {
         // 正常解绑的时候不会被调用，出现异常断开会被调用
         @Override
         public void onServiceDisconnected(ComponentName componentName) {
+            Toast.makeText(ClientService.this, "远程服务被杀", Toast.LENGTH_LONG).show();
+            ClientService.this.startService(new Intent(ClientService.this, ServerService.class));
+            ClientService.this.bindService(new Intent(ClientService.this, ServerService.class), connection, Context.BIND_IMPORTANT);
 
         }
     };

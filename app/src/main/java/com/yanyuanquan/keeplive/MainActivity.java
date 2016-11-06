@@ -12,15 +12,13 @@ import android.support.v7.view.ContextThemeWrapper;
 
 
 public class MainActivity extends AppCompatActivity {
-    private ClientService clientService;
-    private ServerService serverService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        startService(new Intent(this, ClientService.class));
-        startService(new Intent(this, ServerService.class));
+        this.startService(new Intent(this, ClientService.class));
+        this.startService(new Intent(this, ServerService.class));
     }
 }
